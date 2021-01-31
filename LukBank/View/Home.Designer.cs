@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.lblLogo = new System.Windows.Forms.Label();
-            this.txtUser = new System.Windows.Forms.TextBox();
+            this.TxtUser = new System.Windows.Forms.TextBox();
             this.lblUser = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.btnSignIn = new System.Windows.Forms.Button();
+            this.TxtPassword = new System.Windows.Forms.TextBox();
+            this.BtnSignIn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblLogo
@@ -46,13 +46,13 @@
             this.lblLogo.Size = new System.Drawing.Size(177, 142);
             this.lblLogo.TabIndex = 0;
             // 
-            // txtUser
+            // TxtUser
             // 
-            this.txtUser.BackColor = System.Drawing.Color.Plum;
-            this.txtUser.Location = new System.Drawing.Point(13, 270);
-            this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(240, 23);
-            this.txtUser.TabIndex = 1;
+            this.TxtUser.BackColor = System.Drawing.Color.Plum;
+            this.TxtUser.Location = new System.Drawing.Point(13, 270);
+            this.TxtUser.Name = "TxtUser";
+            this.TxtUser.Size = new System.Drawing.Size(240, 23);
+            this.TxtUser.TabIndex = 1;
             // 
             // lblUser
             // 
@@ -76,26 +76,27 @@
             this.lblPassword.TabIndex = 3;
             this.lblPassword.Text = "Password";
             // 
-            // txtPassword
+            // TxtPassword
             // 
-            this.txtPassword.BackColor = System.Drawing.Color.Plum;
-            this.txtPassword.Location = new System.Drawing.Point(13, 358);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(240, 23);
-            this.txtPassword.TabIndex = 4;
+            this.TxtPassword.BackColor = System.Drawing.Color.Plum;
+            this.TxtPassword.Location = new System.Drawing.Point(13, 358);
+            this.TxtPassword.Name = "TxtPassword";
+            this.TxtPassword.Size = new System.Drawing.Size(240, 23);
+            this.TxtPassword.TabIndex = 4;
             // 
-            // btnSignIn
+            // BtnSignIn
             // 
-            this.btnSignIn.BackColor = System.Drawing.Color.Purple;
-            this.btnSignIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSignIn.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnSignIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSignIn.Location = new System.Drawing.Point(12, 414);
-            this.btnSignIn.Name = "btnSignIn";
-            this.btnSignIn.Size = new System.Drawing.Size(239, 74);
-            this.btnSignIn.TabIndex = 5;
-            this.btnSignIn.Text = "Sign In";
-            this.btnSignIn.UseVisualStyleBackColor = false;
+            this.BtnSignIn.BackColor = System.Drawing.Color.Purple;
+            this.BtnSignIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSignIn.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.BtnSignIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.BtnSignIn.Location = new System.Drawing.Point(12, 414);
+            this.BtnSignIn.Name = "BtnSignIn";
+            this.BtnSignIn.Size = new System.Drawing.Size(239, 74);
+            this.BtnSignIn.TabIndex = 5;
+            this.BtnSignIn.Text = "Sign In";
+            this.BtnSignIn.UseVisualStyleBackColor = false;
+            this.BtnSignIn.Click += new System.EventHandler(this.BtnSignIn_Click);
             // 
             // Home
             // 
@@ -103,11 +104,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(264, 531);
-            this.Controls.Add(this.btnSignIn);
-            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.BtnSignIn);
+            this.Controls.Add(this.TxtPassword);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUser);
-            this.Controls.Add(this.txtUser);
+            this.Controls.Add(this.TxtUser);
             this.Controls.Add(this.lblLogo);
             this.Name = "Home";
             this.Text = "LukBank";
@@ -119,11 +120,11 @@
         #endregion
 
         private System.Windows.Forms.Label lblLogo;
-        private System.Windows.Forms.TextBox txtUser;
+        private System.Windows.Forms.TextBox TxtUser;
         private System.Windows.Forms.Label lblUser;
         private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Button btnSignIn;
+        private System.Windows.Forms.TextBox TxtPassword;
+        private System.Windows.Forms.Button BtnSignIn;
     }
 }
 
