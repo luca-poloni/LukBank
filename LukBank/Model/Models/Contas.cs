@@ -7,11 +7,9 @@ namespace LukBank.Models
     {
         public Contas()
         {
-            Cadastroapp = new HashSet<CadastroApp>();
+            CadastrosApps = new HashSet<CadastrosApps>();
             Clientes = new HashSet<Clientes>();
             Pagamentos = new HashSet<Pagamentos>();
-            TransferenciasContaDestinatariaNavigation = new HashSet<Transferencias>();
-            TransferenciasContaRemetenteNavigation = new HashSet<Transferencias>();
         }
 
         public int Id { get; set; }
@@ -19,13 +17,11 @@ namespace LukBank.Models
         public int Agencia { get; set; }
         public string TipoConta { get; set; }
         public decimal Saldo { get; set; }
-        public sbyte Ativo { get; set; }
-        public DateTime? DataInserido { get; set; }
+        public bool? Ativo { get; set; }
+        public DateTime DataInserido { get; set; }
 
-        public virtual ICollection<CadastroApp> Cadastroapp { get; set; }
+        public virtual ICollection<CadastrosApps> CadastrosApps { get; set; }
         public virtual ICollection<Clientes> Clientes { get; set; }
         public virtual ICollection<Pagamentos> Pagamentos { get; set; }
-        public virtual ICollection<Transferencias> TransferenciasContaDestinatariaNavigation { get; set; }
-        public virtual ICollection<Transferencias> TransferenciasContaRemetenteNavigation { get; set; }
     }
 }

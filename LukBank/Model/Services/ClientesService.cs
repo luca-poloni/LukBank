@@ -16,7 +16,7 @@ namespace LukBank.Model.Services
 
                 cliente.PessoaNavigation = pessoa;
                 cliente.ContaNavigation = conta;
-                cliente.Ativo = 1;
+                cliente.Ativo = true;
             }
             catch (Exception e)
             {

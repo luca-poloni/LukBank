@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 namespace LukBank.Models
 {
-    public partial class Pagamentos
+    public partial class Transacoes
     {
         public int Id { get; set; }
-        public int Conta { get; set; }
+        public int ContaRemetente { get; set; }
+        public int ContaDestino { get; set; }
+        public int TipoTransacao { get; set; }
         public decimal Valor { get; set; }
-        public int CodigoBarra { get; set; }
         public DateTime Data { get; set; }
-
-        public virtual Contas ContaNavigation { get; set; }
     }
 }

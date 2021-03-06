@@ -11,13 +11,13 @@ namespace LukBank.Model.Services
         public static Contas CriarConta(int agencia, string tipoConta)
         {
             Contas contas = null;
-            var validaNumeroConta = true;
-            var numeroRandom = 0;
+            int numeroRandom;
             Random random = new Random();
+            var validaNumeroConta = true;
 
             try
             {
-                contas = new Contas() { Agencia = agencia, TipoConta = tipoConta, Ativo = 1};
+                contas = new Contas() { Agencia = agencia, TipoConta = tipoConta, Ativo = true};
 
                 do
                 {

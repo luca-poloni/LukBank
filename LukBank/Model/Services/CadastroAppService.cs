@@ -8,23 +8,25 @@ namespace LukBank.Model.Services
     {
         private static Context _context = new Context();
 
-        public static CadastroApp CriarCadastroApp(string usuario, string senha, int numeroConta)
+        public static bool CriarCadastroApp(string usuario, string senha, Contas conta)
         {
-            CadastroApp cadastroApp = null;
+            var sucesso = false;
 
             try
             {
-                var conta = _context.Contas.FirstOrDefault(c => c.Numero == numeroConta);
+                var cadastroApp = new CadastrosApps() { Usuario = usuario, Senha = senha, ContaNavigation = conta };
 
-                if (conta != default)
-                    cadastroApp = new CadastroApp() { Usuario = usuario, Senha = senha, Conta = conta.Id };
+                _context.CadastrosApps.Add(cadastroApp);
+                _context.SaveChanges();
+
+                sucesso = true;
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Houve um erro ao criar o cadastro: {e}");
             }
 
-            return cadastroApp;
+            return sucesso;
         }
 
         public static bool RealizarLogin(string usuario, string senha)
@@ -33,7 +35,7 @@ namespace LukBank.Model.Services
 
             try
             {
-                if (_context.CadastroApp.Any(c => c.Usuario == usuario && c.Senha == senha))
+                if (_context.CadastrosApps.Any(c => c.Usuario == usuario && c.Senha == senha))
                     sucesso = true;
             }
             catch (Exception e)

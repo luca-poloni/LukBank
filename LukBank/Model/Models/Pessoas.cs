@@ -12,10 +12,10 @@ namespace LukBank.Models
 
         public int Id { get; set; }
         public string Nome { get; set; }
-        public DateTime DataNascimento { get; set; }
         public string CpfCnpj { get; set; }
+        public DateTime DataNascimento { get; set; }
         public bool TipoPessoa { get; set; }
-        public DateTime? DataInserido { get; set; }
+        public DateTime DataInserido { get; set; }
 
         public virtual ICollection<Clientes> Clientes { get; set; }
     }

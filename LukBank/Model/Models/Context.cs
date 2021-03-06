@@ -15,36 +15,28 @@ namespace LukBank.Models
         {
         }
 
-        public virtual DbSet<CadastroApp> CadastroApp { get; set; }
+        public virtual DbSet<CadastrosApps> CadastrosApps { get; set; }
         public virtual DbSet<Clientes> Clientes { get; set; }
         public virtual DbSet<Contas> Contas { get; set; }
         public virtual DbSet<Pagamentos> Pagamentos { get; set; }
         public virtual DbSet<Pessoas> Pessoas { get; set; }
-        public virtual DbSet<Tipotransacoes> Tipotransacoes { get; set; }
-        public virtual DbSet<Transferencias> Transferencias { get; set; }
+        public virtual DbSet<Tipostransacoes> Tipostransacoes { get; set; }
+        public virtual DbSet<Transacoes> Transacoes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseMySql("Server=localhost;DataBase=LukBank;Uid=developer;Pwd=123456");
+                optionsBuilder.UseMySql("Server=localhost;DataBase=LukBank;Uid=root;Pwd=");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CadastroApp>(entity =>
+            modelBuilder.Entity<CadastrosApps>(entity =>
             {
-                entity.ToTable("cadastroapp");
+                entity.ToTable("cadastrosapps");
 
                 entity.HasIndex(e => e.Conta)
-                    .HasName("FK_ContaApp");
-
-                entity.HasIndex(e => e.Senha)
-                    .HasName("Senha")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Usuario)
-                    .HasName("Usuario")
-                    .IsUnique();
+                    .HasName("Conta");
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
@@ -56,17 +48,17 @@ namespace LukBank.Models
 
                 entity.Property(e => e.Senha)
                     .IsRequired()
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(400)");
 
                 entity.Property(e => e.Usuario)
                     .IsRequired()
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(400)");
 
                 entity.HasOne(d => d.ContaNavigation)
-                    .WithMany(p => p.Cadastroapp)
+                    .WithMany(p => p.CadastrosApps)
                     .HasForeignKey(d => d.Conta)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ContaApp");
+                    .HasConstraintName("cadastrosapps_ibfk_1");
             });
 
             modelBuilder.Entity<Clientes>(entity =>
@@ -74,16 +66,17 @@ namespace LukBank.Models
                 entity.ToTable("clientes");
 
                 entity.HasIndex(e => e.Conta)
-                    .HasName("FK_Conta");
+                    .HasName("Conta");
 
                 entity.HasIndex(e => e.Pessoa)
-                    .HasName("FK_Pessoa");
+                    .HasName("Pessoa");
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
                 entity.Property(e => e.Ativo)
-                    .HasColumnType("tinyint(1)")
-                    .HasDefaultValueSql("'1'");
+                    .IsRequired()
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("'b\\'1\\''");
 
                 entity.Property(e => e.Conta).HasColumnType("int(11)");
 
@@ -97,13 +90,13 @@ namespace LukBank.Models
                     .WithMany(p => p.Clientes)
                     .HasForeignKey(d => d.Conta)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Conta");
+                    .HasConstraintName("clientes_ibfk_2");
 
                 entity.HasOne(d => d.PessoaNavigation)
                     .WithMany(p => p.Clientes)
                     .HasForeignKey(d => d.Pessoa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Pessoa");
+                    .HasConstraintName("clientes_ibfk_1");
             });
 
             modelBuilder.Entity<Contas>(entity =>
@@ -119,8 +112,9 @@ namespace LukBank.Models
                 entity.Property(e => e.Agencia).HasColumnType("int(11)");
 
                 entity.Property(e => e.Ativo)
-                    .HasColumnType("tinyint(1)")
-                    .HasDefaultValueSql("'1'");
+                    .IsRequired()
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("'b\\'1\\''");
 
                 entity.Property(e => e.DataInserido)
                     .HasColumnType("datetime")
@@ -134,25 +128,19 @@ namespace LukBank.Models
 
                 entity.Property(e => e.TipoConta)
                     .IsRequired()
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<Pagamentos>(entity =>
             {
                 entity.ToTable("pagamentos");
 
-                entity.HasIndex(e => e.CodigoBarra)
-                    .HasName("CodigoBarra")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.Conta)
-                    .HasName("FK_ContaPagamentos");
+                    .HasName("Conta");
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
-                entity.Property(e => e.CodigoBarra)
-                    .IsRequired()
-                    .HasColumnType("varchar(100)");
+                entity.Property(e => e.CodigoBarra).HasColumnType("int(11)");
 
                 entity.Property(e => e.Conta).HasColumnType("int(11)");
 
@@ -166,16 +154,12 @@ namespace LukBank.Models
                     .WithMany(p => p.Pagamentos)
                     .HasForeignKey(d => d.Conta)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ContaPagamentos");
+                    .HasConstraintName("pagamentos_ibfk_1");
             });
 
             modelBuilder.Entity<Pessoas>(entity =>
             {
                 entity.ToTable("pessoas");
-
-                entity.HasIndex(e => e.CpfCnpj)
-                    .HasName("CpfCnpj")
-                    .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
@@ -191,46 +175,34 @@ namespace LukBank.Models
 
                 entity.Property(e => e.Nome)
                     .IsRequired()
-                    .HasColumnType("varchar(600)");
+                    .HasColumnType("varchar(400)");
 
                 entity.Property(e => e.TipoPessoa).HasColumnType("bit(1)");
             });
 
-            modelBuilder.Entity<Tipotransacoes>(entity =>
+            modelBuilder.Entity<Tipostransacoes>(entity =>
             {
-                entity.ToTable("tipotransacoes");
-
-                entity.HasIndex(e => e.Nome)
-                    .HasName("Nome")
-                    .IsUnique();
+                entity.ToTable("tipostransacoes");
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
                 entity.Property(e => e.Ativo)
-                    .HasColumnType("tinyint(1)")
-                    .HasDefaultValueSql("'1'");
+                    .IsRequired()
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("'b\\'1\\''");
 
                 entity.Property(e => e.Nome)
                     .IsRequired()
                     .HasColumnType("varchar(100)");
             });
 
-            modelBuilder.Entity<Transferencias>(entity =>
+            modelBuilder.Entity<Transacoes>(entity =>
             {
-                entity.ToTable("transferencias");
-
-                entity.HasIndex(e => e.ContaDestinataria)
-                    .HasName("FK_ContaDestinataria");
-
-                entity.HasIndex(e => e.ContaRemetente)
-                    .HasName("FK_ContaRemetente");
-
-                entity.HasIndex(e => e.TipoTransacao)
-                    .HasName("FK_TipoTransacao");
+                entity.ToTable("transacoes");
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
-                entity.Property(e => e.ContaDestinataria).HasColumnType("int(11)");
+                entity.Property(e => e.ContaDestino).HasColumnType("int(11)");
 
                 entity.Property(e => e.ContaRemetente).HasColumnType("int(11)");
 
@@ -241,24 +213,6 @@ namespace LukBank.Models
                 entity.Property(e => e.TipoTransacao).HasColumnType("int(11)");
 
                 entity.Property(e => e.Valor).HasColumnType("decimal(10,0)");
-
-                entity.HasOne(d => d.ContaDestinatariaNavigation)
-                    .WithMany(p => p.TransferenciasContaDestinatariaNavigation)
-                    .HasForeignKey(d => d.ContaDestinataria)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ContaDestinataria");
-
-                entity.HasOne(d => d.ContaRemetenteNavigation)
-                    .WithMany(p => p.TransferenciasContaRemetenteNavigation)
-                    .HasForeignKey(d => d.ContaRemetente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ContaRemetente");
-
-                entity.HasOne(d => d.TipoTransacaoNavigation)
-                    .WithMany(p => p.Transferencias)
-                    .HasForeignKey(d => d.TipoTransacao)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TipoTransacao");
             });
         }
     }

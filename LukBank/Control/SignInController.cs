@@ -2,14 +2,16 @@
 
 namespace LukBank.Control
 {
-    static class CadastroAppControler
+    static class SignInController
     {
         public static bool RealizarLogin(string usuario, string senha)
         {
-            if (CadastroAppService.RealizarLogin(usuario, senha))
-                return true;
+            var sucesso = false;
 
-            return false;
+            if (CadastroAppService.RealizarLogin(usuario, senha))
+                sucesso = true;
+
+            return sucesso;
         }
     }
 }
